@@ -16,7 +16,7 @@ class Pair:
 class BasicHashTable:
     def __init__(self, capacity):
         self.capacity = capacity
-        self.arr = [None] * capacity
+        self.storage = [None] * capacity
 
 
 # '''
@@ -37,14 +37,15 @@ def hash(string, max):
 # If you are overwriting a value with a different key, print a warning.
 # '''
 def hash_table_insert(hash_table, key, value):
-    hashed_value = hash(value, 33)
-    newPair = Pair(key, hashed_value)
-    if newPair in hash_table.arr: 
+    # hashed_value = hash(value, 33)
+    # print("Our hashed value", hashed_value)
+    newPair = Pair(key, value)
+    if newPair in hash_table.storage: 
         print("This item is in the hash table")
     else:
         for i in range(hash_table.capacity):
-            if hash_table.arr[i] == None:
-                hash_table.arr[i] = newPair
+            if hash_table.storage[i] == None:
+                hash_table.storage[i] = newPair
                 break 
 
 
@@ -54,10 +55,10 @@ def hash_table_insert(hash_table, key, value):
 # If you try to remove a value that isn't there, print a warning.
 # '''
 def hash_table_remove(hash_table, key):
-    print(hash_table.arr)
+    print(hash_table.storage)
     for i in range(hash_table.capacity):
-        if hash_table.arr[i].key == key: 
-            hash_table.arr[i] = None 
+        if hash_table.storage[i].key == key: 
+            hash_table.storage[i] = None 
             break 
     print("This item is not in the hash table")
 # '''
@@ -66,11 +67,11 @@ def hash_table_remove(hash_table, key):
 # Should return None if the key is not found.
 # '''
 def hash_table_retrieve(hash_table, key):
-    for pair in hash_table.arr:
+    for pair in hash_table.storage:
         if pair == None:
             pass
         elif pair.key == key: 
-            return pair 
+            return pair.value 
     return None 
 
 
