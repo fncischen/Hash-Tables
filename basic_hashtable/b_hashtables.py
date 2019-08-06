@@ -25,11 +25,15 @@ class BasicHashTable:
 # '''
 def hash(string, max):
 
-    hash = 5381
-    for c in string:
-        hash = (hash * max) + ord(c)
-    return hash
+    # hash = 5381
+    # for c in string:
+    #     hash = (hash * 33) + ord(c)
+    # return hash
 
+    num = 5381 # prime
+    for char in string:
+        num = (num * 33) + ord(char)
+    return num % max
 
 # '''
 # Fill this in.
@@ -37,16 +41,17 @@ def hash(string, max):
 # If you are overwriting a value with a different key, print a warning.
 # '''
 def hash_table_insert(hash_table, key, value):
-    # hashed_value = hash(value, 33)
+    index = hash(value, hash_table.capacity)
     # print("Our hashed value", hashed_value)
-    newPair = Pair(key, value)
-    if newPair in hash_table.storage: 
-        print("This item is in the hash table")
+    pair = Pair(key, value)
+    if hash_table.storage[index] != None: 
+        print("There's already an item in the hash table")
     else:
-        for i in range(hash_table.capacity):
-            if hash_table.storage[i] == None:
-                hash_table.storage[i] = newPair
-                break 
+        hash_table.storage[index] = pair
+        # for i in range(hash_table.capacity):
+        #     if hash_table.storage[i] == None:
+        #         hash_table.storage[i] = newPair
+        #         break 
 
 
 # '''
@@ -57,7 +62,9 @@ def hash_table_insert(hash_table, key, value):
 def hash_table_remove(hash_table, key):
     print(hash_table.storage)
     for i in range(hash_table.capacity):
-        if hash_table.storage[i].key == key: 
+        if hash_table.storage[i] == None:
+            pass
+        elif hash_table.storage[i].key == key: 
             hash_table.storage[i] = None 
             break 
     print("This item is not in the hash table")
