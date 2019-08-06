@@ -51,14 +51,24 @@ def hash_table_insert(hash_table, key, value):
 # If you try to remove a value that isn't there, print a warning.
 # '''
 def hash_table_remove(hash_table, key):
-    print(hash_table.storage)
+    # print(hash_table.storage)
     for i in range(hash_table.capacity):
         if hash_table.storage[i] == None:
             pass
-        elif hash_table.storage[i].key == key: 
-            hash_table.storage[i] = None 
-            break 
-    print("This item is not in the hash table")
+        else:
+            tempLinkedPair = hash_table.storage[i]
+            if tempLinkedPair.key = key:
+                hash_table.storage[i] = None
+            else:  
+                if tempLinkedPair.next == None:
+                    pass
+                else:
+                    while tempLinkedPair.next != None:
+                        if tempLinkedPair.next.key = key
+                            tempLinkedPair.next = None 
+                            break
+                        else:
+                            tempLinkedPair = tempLinkedPair.next 
 
 
 # '''
@@ -70,8 +80,20 @@ def hash_table_retrieve(hash_table, key):
     for pair in hash_table.storage:
         if pair == None:
             pass
-        elif pair.key == key: 
-            return pair.value 
+        else:
+            tempLinkedPair = pair
+            if pair.key = key:
+                return pair.value
+            else:  
+                if tempLinkedPair.next == None:
+                    pass
+                else:
+                    while tempLinkedPair.next != None:
+                        if tempLinkedPair.next.key = key
+                            return tempLinkedPair.next.value
+                        else:
+                            tempLinkedPair = tempLinkedPair.next 
+
     return None 
 
 
