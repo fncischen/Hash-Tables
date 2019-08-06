@@ -15,6 +15,7 @@ class Pair:
 # '''
 class BasicHashTable:
     def __init__(self, capacity):
+        self.capacity = capacity
         self.arr = [None] * capacity
 
 
@@ -41,7 +42,10 @@ def hash_table_insert(hash_table, key, value):
     if newPair in hash_table.arr: 
         print("This item is in the hash table")
     else:
-        hash_table.arr.append(newPair)
+        for i in range(hash_table.capacity):
+            if hash_table.arr[i] == None:
+                hash_table.arr[i] = newPair
+                break 
 
 
 # '''
@@ -51,11 +55,9 @@ def hash_table_insert(hash_table, key, value):
 # '''
 def hash_table_remove(hash_table, key):
     print(hash_table.arr)
-    for pair in hash_table.arr:
-        if pair == None:
-            pass  
-        elif pair.key == key: 
-            hash_table.arr.remove(pair)
+    for i in range(hash_table.capacity):
+        if hash_table.arr[i].key == key: 
+            hash_table.arr[i] = None 
             break 
     print("This item is not in the hash table")
 # '''
