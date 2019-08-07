@@ -65,18 +65,18 @@ def hash_table_remove(hash_table, key):
         return None 
     elif hash_table.storage[index].key == key:
         if hash_table.storage[index].next == None:
-            hash_table.storage[index] == None
+            hash_table.storage[index] = None
         else:
             hash_table.storage[index] = hash_table.storage[index].next
     else:  
         tempLinkedPair = hash_table.storage[index]
         while tempLinkedPair.next != None:
             if tempLinkedPair.next.key == key:
-
+                if tempLinkedPair.next.next == None:
                 ## refactor linked list through hash
-
-                ## 
-                tempLinkedPair.next = tempLinkedPair.next.next; 
+                    tempLinkedPair.next = None
+                else:
+                    tempLinkedPair.next = tempLinkedPair.next.next; 
                 break 
             else:
                 tempLinkedPair = tempLinkedPair.next 
