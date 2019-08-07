@@ -36,13 +36,22 @@ def hash(string, max):
 # Hint: Used the LL to handle collisions
 # '''
 def hash_table_insert(hash_table, key, value):
-    index = hash(value, hash_table.capacity)
+    index = hash(key, hash_table.capacity)
     # print("Our hashed value", hashed_value)
     pair = LinkedPair(key, value)
-    if hash_table.storage[index] != None: 
-        hash_table.storage[index].next = pair 
+    if hash_table.storage[index] == None: 
+        hash_table.storage[index] = pair 
     else:
-        hash_table.storage[index] = pair
+        if hash_table.storage[index].key == key:
+            hash_table.storage[index] = pair
+        else:
+            tempLinkedPair = hash_table.storage[index]
+            while tempLinkedPair != None:
+                if tempLinkedPair.next == None:
+                    tempLinkedPair.next = pair
+                    break 
+                else:
+                    tempLinkedPair = tempLinkedPair.next 
 
 
 # '''
@@ -51,24 +60,26 @@ def hash_table_insert(hash_table, key, value):
 # If you try to remove a value that isn't there, print a warning.
 # '''
 def hash_table_remove(hash_table, key):
-    # print(hash_table.storage)
-    for i in range(hash_table.capacity):
-        if hash_table.storage[i] == None:
-            pass
+    index = hash(key, hash_table.capacity)
+    if hash_table.storage[index] == None:
+        return None 
+    elif hash_table.storage[index].key == key:
+        if hash_table.storage[index].next == None:
+            hash_table.storage[index] == None
         else:
-            tempLinkedPair = hash_table.storage[i]
-            if tempLinkedPair.key = key:
-                hash_table.storage[i] = None
-            else:  
-                if tempLinkedPair.next == None:
-                    pass
-                else:
-                    while tempLinkedPair.next != None:
-                        if tempLinkedPair.next.key = key
-                            tempLinkedPair.next = None 
-                            break
-                        else:
-                            tempLinkedPair = tempLinkedPair.next 
+            hash_table.storage[index] = hash_table.storage[index].next
+    else:  
+        tempLinkedPair = hash_table.storage[index]
+        while tempLinkedPair.next != None:
+            if tempLinkedPair.next.key == key:
+
+                ## refactor linked list through hash
+
+                ## 
+                tempLinkedPair.next = tempLinkedPair.next.next; 
+                break 
+            else:
+                tempLinkedPair = tempLinkedPair.next 
 
 
 # '''
@@ -77,25 +88,20 @@ def hash_table_remove(hash_table, key):
 # Should return None if the key is not found.
 # '''
 def hash_table_retrieve(hash_table, key):
-    for pair in hash_table.storage:
-        if pair == None:
-            pass
-        else:
-            tempLinkedPair = pair
-            if pair.key = key:
-                return pair.value
-            else:  
-                if tempLinkedPair.next == None:
-                    pass
-                else:
-                    while tempLinkedPair.next != None:
-                        if tempLinkedPair.next.key = key
-                            return tempLinkedPair.next.value
-                        else:
-                            tempLinkedPair = tempLinkedPair.next 
-
-    return None 
-
+    index = hash(key, hash_table.capacity)
+    if hash_table.storage[index] == None:
+        return None 
+    elif hash_table.storage[index].key == key:
+        return hash_table.storage[index].value
+    else:  
+        # print(hash_table.storage)
+        tempLinkedPair = hash_table.storage[index]
+        while tempLinkedPair.next != None:
+            if tempLinkedPair.next.key == key:
+                return tempLinkedPair.next.value
+            else:
+                tempLinkedPair = tempLinkedPair.next 
+        return None 
 
 # '''
 # Fill this in
@@ -106,16 +112,17 @@ def hash_table_resize(hash_table):
     newHashTable = HashTable(hash_table.capacity * 2)
 
     for linkedPair in oldStorage:
-        if linkedPair.next != None:
+        if linkedPair == None:
+            pass
+        else:
             tempLinkPair = linkedPair
-            while tempLinkPair.next != None:
-                if tempLinkPair.next != None:
-                    oldStorage.append(tempLinkPair.next)
+            hash_table_insert(newHashTable, tempLinkPair.key, tempLinkPair.value)
+            if linkedPair.next != None:
+                while tempLinkPair.next != None:
+                    print("check!")
+                    hash_table_insert(newHashTable, tempLinkPair.next.key, tempLinkPair.next.value)
                     tempLinkPair = tempLinkPair.next
-    
-    for linkedPair in oldStorage:
-        hash_table_insert(newHashTable, linkedPair.key, linkedPair.value)
-    
+
     return newHashTable
 
 
