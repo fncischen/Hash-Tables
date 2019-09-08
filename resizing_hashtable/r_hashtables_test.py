@@ -70,6 +70,7 @@ class TestFullHashTable(unittest.TestCase):
         hash_table_insert(ht, "key-9", "new-val-9")
 
         return_value = hash_table_retrieve(ht, "key-0")
+        print("This is return value", return_value)
         self.assertTrue(return_value == "new-val-0")
         return_value = hash_table_retrieve(ht, "key-1")
         self.assertTrue(return_value == "new-val-1")
